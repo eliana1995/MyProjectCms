@@ -1,0 +1,80 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Routing
+@using Umbraco.Extensions
+
+@inject IPublishedValueFallback PublishedValueFallback
+@inject IPublishedUrlProvider PublishedUrlProvider
+
+
+@{ 
+
+var site = Model.Root();
+
+var selection = Model.Root().Children.Where(x => x.IsVisible(PublishedValueFallback)).ToArray(); 
+
+}
+
+
+
+
+  <header>
+       
+
+        <div class="container">
+            <img src="~/images/logotype.svg" alt="crito logotype">
+            <button class="bars"> <i class="fa-solid fa-bars-staggered"></i></button>
+            <div class="menu">
+                <div class="top-menu">
+                    <div class="contact-information">
+                        <div class="content-box">
+                            <i class="fa-sharp fa-solid fa-phone-volume"></i>
+                            +46(8)
+                        </div>
+                        <div class="content-box">
+                            <i class="fa-regular fa-envelope"></i>
+                            info@crito.com
+                        </div>
+                        <div class="content-box last">
+                            <i class="fa-solid fa-location-dot"></i>
+                            Sveavägen 31, 111,34 STOCHOLM
+                        </div>
+                    </div>
+                    <div class="social-media">
+                        <a href="https://www.facebook.com/login/" target="_blank"> <i
+                                class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/i/flow/login" target="_blank"><i
+                                class="fa-brands fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/accounts/login/" target="_blank"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+
+                    </div>
+                </div>
+                <div class="main-menu">
+                    <nav>
+                        <a class="@(Model.Id == site.Id ? "active": null)" href="@site.Url()">@site.Name</a>
+                       
+                        
+                        @if (selection?.Length > 0)
+{
+    
+        @foreach (var item in selection)
+        {
+                          <a class="@(item.IsAncestorOrSelf(Model) ? "active": null)" href="@item.Url(PublishedUrlProvider)">@item.Name</a>
+          
+        }
+    
+}
+
+                    </nav>
+                    <a  class="btn-yellow" type="button"  href="/login">LOGIN<i class="fa-solid fa-arrow-right"></i></a>
+
+                    
+                </div>
+
+            </div>
+        </div>
+
+    </header>

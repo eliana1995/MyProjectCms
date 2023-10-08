@@ -1,0 +1,33 @@
+﻿@using Umbraco.Cms.Core.Models;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+<section class="case" >
+ <div class="container">
+    <div class="content">
+
+       <h1>@Model.Value("showTitle")</h1>
+       <p>@Model.Value("showDescription")</p>
+       <a    class="btn-yellow" type="button" class="btn btn-warning" href="@Model.Value("showButtonUrl")">@Model.Value("showButtonText")<i class="fa-solid fa-arrow-right"></i></a>
+
+       <a    class="btn-yellow" type="button" class="btn btn-warning" href="@Model.Value("showButtonUrl")">Learn more<i class="fa-solid fa-arrow-right"></i></a>
+
+       </div>
+       <div class="image-column">
+       
+       @{
+            var showImage = Model.Value<MediaWithCrops>("showImage");
+
+       if (showImage != null)
+       {
+       
+        
+             <img src="@showImage.MediaUrl()" style="width:500px" alt="@Model.Value("showTitle")">
+
+       }
+      }
+       
+       
+
+ </div>
+ </div>
+    </section>

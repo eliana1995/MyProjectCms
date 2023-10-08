@@ -1,0 +1,47 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.ServicesItemPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models.PublishedContent;
+@using Umbraco.Cms.Core.Services;
+@inject IUserService UserService;
+@{
+	Layout = "LayoutWithBreacrumb.cshtml";
+	  var image = Model.Value<IPublishedContent>("serviceImage");
+}
+
+
+
+
+ <section class="item-section">
+        <div class="container">
+            <div class="content">
+                <h2>@Model.Value("servicesCategory")</h2>
+                <div class="article-details">
+                    <span>@Model.CreateDate.ToString("MM dd, yyyy")</span>
+                    <i class="fa-solid fa-circle"></i>
+                    <span>@Model.Value("servicesCategory")</span>
+                    <i class="fa-solid fa-circle"></i>
+                    <span>@Model.CreatorName(UserService)</span>
+                </div>
+            </div>
+            <div class="first-article">
+                <div class="content">
+                <img src="@image.Url()" alt="" >
+                <p>@Model.Value("serviceContent")</p>
+        <div class="tags">
+         @foreach (var tag in Model.Value<IEnumerable<string>>("ServiceTag"))
+            {
+              <span>@tag</span>
+            
+            }
+        </div>
+        </div>
+        <aside class="boxss">
+        <div class="box-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="type of serach">
+        </div>
+        </aside>
+            </div>
+        </div>
+        </section>

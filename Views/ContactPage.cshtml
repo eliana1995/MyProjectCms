@@ -1,0 +1,91 @@
+﻿
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.ContactPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "LayoutWithBreacrumb.cshtml";
+    var contactForm = new MyProject.Models.ContactForm();
+}
+
+
+  <section class="contact-information">
+    <div class="container">
+        <div class="box">
+            <div class="black-circle"><i class="fa-solid fa-location-dot"></i></div>
+            <h5>Visit us</h5>
+            <div class="info">
+                <p>@Model.Value("streetName")</p>
+                <p>@Model.Value("postalCode") @Model.Value("cityName")</p>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="black-circle"><i class="fa-solid fa-phone"></i></div>
+            <h5>call us</h5>
+            <div class="info">
+                <p>@Model.Value("phoneNumber1")</p>
+                <p>@Model.Value("phoneNumber2")</p>
+                
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="black-circle"><i class="fa-regular fa-envelope"></i></div>
+            <h5>Email us</h5>
+            <div class="info">
+                <p>@Model.Value("email1")</p>
+                <p>@Model.Value("email2")</p>
+                
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+
+  </section>  
+
+
+  <section class="form-information">
+    <div class="container">
+        <h2>leave us a message for any information</h2>
+
+        @using (Html.BeginUmbracoForm("Index","Contacts",FormMethod.Post))
+      {
+            <div asp-validation-summary="ModelOnly"></div>
+
+            <input asp-for="@contactForm.Name" type="text" placeholder="name">
+            <input asp-for="@contactForm.Email" type="text" placeholder="email">
+            <textarea asp-for="@contactForm.Message" placeholder="your message"></textarea>
+            <div class="d-grid">
+                <button type="submit"  class="btn-theme">send message <i class="fa-solid fa-arrow-right"></i></button>
+
+            </div>
+
+     }
+
+    </div>
+
+  </section>
+  
+  <div class="googelMap"><iframe src="@Model.Value("mapUrl")"
+  width="1600" height="400" style="border:0; padding-top:30px" allowfullscreen="" 
+  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+     
+    </div>
+
+
+
+
+  
+
+
+
+  
+  
+  
+  
+  

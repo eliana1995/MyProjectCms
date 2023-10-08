@@ -1,0 +1,33 @@
+﻿
+@using Umbraco.Cms.Core.Models;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+ <section class="team">
+        <div class="container">
+            <div class="team-title">
+                <h1>@Model.Value("caseTitle") </h1>
+                <h2>@Model.Value("caseHeding")</h2>
+                <p>@Model.Value("caseDescription") </p>
+                <a class="btn-black" class="btn-yellow" type="button" class="btn btn-warning"
+                    href="@Model.Value("url1")">@Model.Value("caseButtonText")<i class="fa-solid fa-arrow-right"></i></a>
+
+                <a class="btn-black" class="btn-yellow" type="button" class="btn btn-warning" href="@Model.Value("url2")">@Model.Value("caseButtonUrl")<i class="fa-solid fa-play"></i></a>
+
+
+            </div>
+          
+                   
+       @{
+            var imageimage = Model.Value<MediaWithCrops>("imageimage");
+
+       if (imageimage != null)
+       {
+       
+        
+             <img src="@imageimage.MediaUrl()" style="width:500px" alt="">
+
+       }
+      }
+        </div>
+
+    </section>

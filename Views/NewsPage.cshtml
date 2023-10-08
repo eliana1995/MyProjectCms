@@ -1,0 +1,115 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.NewsPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models.PublishedContent;
+@{
+    Layout = "LayoutWithBreacrumb.cshtml";
+
+    var itemsPerPage = 6;
+    var pageNumber = 1;
+
+    if (!int.TryParse(Context. Request.Query["page"], out pageNumber))
+        pageNumber = 1;
+
+    var selection = Umbraco?.Content(Guid.Parse("7680432d-a13c-4d86-917d-68637989c0ea"))?
+        .ChildrenOfType("newsItemPage")?
+        .Where(x => x.IsVisible())
+        .OrderByDescending(x => x.CreateDate).ToList();
+
+    var totalItems = selection?.Count() ?? 0;
+    var pageItems = selection?.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage);
+
+    
+    
+   }
+<section  class="news-article">
+<div class="container">
+    <div class="brows">
+        <h2>Our News & Article</h2>
+    </div>
+<div class="allarticle">
+    
+    
+    
+    
+
+            @if (selection != null)
+            {
+
+                @foreach (var item in selection!)
+                {
+
+                    var url = item.Url();
+                    var date = item.CreateDate;
+                    var image = item.Value<IPublishedContent>("imagesNews");
+                    var categories = item.Value("cateoryNews");
+                    var title = item.Name();
+                    var description = item.Value("preambleNews");
+
+
+                    <a href="@url" class="artical">
+                        <div class="date-artical">
+                            <div class="day">@date.ToString("dd")</div>
+                            <div class="month">@date.ToString("MMM")</div>
+
+                        </div>
+
+                        <img src="@image?.Url()" alt="">
+                        <p class="first-category">@categories</p>
+                        <h5>@title</h5>
+                        <p>@description</p>
+                    </a>
+
+
+                   
+                }
+
+            }
+
+
+
+</div>
+
+
+
+                
+
+   
+      
+      
+
+         
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+
+            
+                @if (pageNumber > 1)
+                {
+                    <a class="page-link" href="?page=@(pageNumber - 1)">Previous</a>
+                }
+
+                <li class="page-item"><a class="page-link" href="?page=@(pageNumber - 1)">1</a></li>
+                <li class="page-item"><a class="page-link" href="?page=@(pageNumber + 1)">2</a></li>
+             
+                 @if (pageNumber < Math.Ceiling((decimal)totalItems / itemsPerPage))
+                {
+
+                    <li class="page-item"><a class="page-link" href="?page=@(pageNumber + 1)">Next</a></li>
+
+                }
+            </ul>
+        </nav>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</section>
+

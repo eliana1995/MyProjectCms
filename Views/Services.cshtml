@@ -1,0 +1,65 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Services>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models.PublishedContent;
+
+@{
+	Layout = "LayoutWithBreacrumb.cshtml";
+		ViewData["TitlePage"] = @Model.Value("Titlepage");
+	ViewData["DescrptionPage"] = @Model.Value("DescrptionPage");
+			ViewData["KeywordsPage"] = @Model.Value("KeywordsPage"); 
+}
+
+
+
+<section class="projekt-and-case">
+        <div class="container">
+            <div class="section-title">
+                <p>@Model.Value("titleproject")</p>
+                <h2>@Model.Value("headingProject")</h2>
+            </div>
+            <div class="projkt-and-cases">
+                
+
+@{
+	var selection = Umbraco?.Content(Guid.Parse("4bfa47ab-8c0e-44df-8444-27503166f4d7"))?
+    .ChildrenOfType("servicesItemPage")?
+    .Where(x => x.IsVisible())
+    .OrderByDescending(x => x.CreateDate).ToList();
+}
+
+
+            @if (selection != null)
+            {
+
+                @foreach (var item in selection)
+                {
+
+                    var url = item.Url();
+                    var image = item.Value<IPublishedContent>("serviceImage");
+                    var category = item.Value("servicesCategory");
+                    var text = item.Value("serviceUrlText");
+                    
+                    <article>
+                        <img src="@image?.Url()" alt="a man hands reading">
+                        <h3> @category</h3>
+                        <a href="@url">@text<i class="fa-solid fa-arrow-right"></i></a>
+                    </article>
+                   
+                }
+
+
+            }
+
+
+
+         
+            </div>
+            <div class="center-content">
+                <a class="btn-black" type="button" class="btn btn-warning" href="@Model.Value("btnUrl")">@Model.Value("btnText")<i
+                        class="fa-solid fa-arrow-right"></i></a>
+            </div>
+
+        </div>
+
+    </section>
